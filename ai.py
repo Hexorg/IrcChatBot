@@ -1,8 +1,10 @@
 class AI:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.permissions = {'Hexorg': '*'}
         self.commands = {'test': self.cmd_test, 
-                        'fake_pubmsg': self.cmd_fake_pubmsg
+                        'fake_pubmsg': self.cmd_fake_pubmsg,
+                        '{},'.format(self.name): self.cmd_recall
                         }
 
     def command(self, nick, command):
@@ -29,6 +31,12 @@ class AI:
         self.pubmsg(nick, ' '.join(args))
         return 'OK'
 
+    def cmd_recall(self, nick, args):
+        return 'I know nothing!'
+
     def pubmsg(self, nick, text):
-        with open('chat_log.txt', 'a') as f:
-            f.write('<{}>: {}\n'.format(nick, ''.join(text)))
+        if text.startswith('{}, '.format(self.name)):
+            print(self.command(nick, text))
+        else:
+            with open('chat_log.txt', 'a') as f:
+                f.write('<{}>: {}\n'.format(nick, ''.join(text)))

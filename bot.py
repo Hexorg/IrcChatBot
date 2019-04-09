@@ -12,7 +12,7 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
             self.channel = channel
             self.nick = nickname
-            self.ai = ai.AI()
+            self.ai = ai.AI(nickname)
 
         def on_nicknameinuse(self, c, e):
             self.nick = c.get_nickname() + "_"
