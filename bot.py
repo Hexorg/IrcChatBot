@@ -4,6 +4,7 @@ import irc.bot
 import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 import Markov
+import ai
 import os
 import yaml
 
@@ -14,6 +15,7 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             self.nick = nickname
             self.chain = Markov.Chain()
             self.chain_file = 'askemen.chain'
+            self.ai = ai.AI()
             if os.path.exists(self.chain_file):
                 self.chain.load(self.chain_file)
             self._load_whitelist()
@@ -26,12 +28,11 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             c.join(self.channel)
         
         def _load_whitelist(self):
-            self._whitelist = yaml.load(open('whitelist.yaml', 'r'))['list']
+            self._whitelist = yaml.load(open('whitelist.yaml', 'r'), Loader=yaml.CLoader)['list']
 
         def on_privmsg(self, c, e):
-            print(c)
-            print(e)
-            try:
+            self.ai.command(e.source.nick, e.arguments)
+            '''try:
                 if len(e.arguments) > 0 and e.arguments[0] == 'Save':
                     self.chain.save(self.chain_file)
                 elif len(e.arguments) > 0 and e.arguments[0] == 'Load':
@@ -49,10 +50,12 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
                         print("Owner is None")
             except Exception as e:
                 print(e)
-
+            '''
                         
 
         def on_pubmsg(self, c, e):
+            self.ai.learn(e.source.nick, e.arguments)
+            '''
             try:  
                 tokens = None
                 if len(e.arguments) > 0:
@@ -76,29 +79,8 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
                             c.privmsg(self.channel, ' '.join(says))
             except:
                 self.chain.save(self.chain_file)
-
-        def _tokenize(self, msg):
-            t = msg.split(' ')
-            if len(t) > 1:
-                return t
-            else:
-                return None
-
-        def is_command(self, msg):
-            entry = "%s, what would " % self.nick
-            lentry = len(entry)
-            if msg.startswith(entry):
-                owner = msg[lentry:msg.find(' ', lentry+1)]
-                lowner = len(owner)
-                lsay = len(' say about ')
-                start = msg[lentry+lowner+lsay:]
-                print(owner)
-                print(start)
-                return (owner, start)
-            else:
-                print("msg doesn't start with %s"  % (entry))
-            return (None, None)
+'''
 
 if __name__ == '__main__': 
-    bot = MarkovBot('#askmen', 'Rorick', 'irc.snoonet.org')
+    bot = MarkovBot('#hexbottesting', 'Rorick', 'irc.snoonet.org')
     bot.start()
