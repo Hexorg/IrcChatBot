@@ -6,19 +6,13 @@ from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 import Markov
 import ai
 import os
-import yaml
 
 class MarkovBot(irc.bot.SingleServerIRCBot):
         def __init__(self, channel, nickname, server, port=6667):
             irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
             self.channel = channel
             self.nick = nickname
-            self.chain = Markov.Chain()
-            self.chain_file = 'askemen.chain'
             self.ai = ai.AI()
-            if os.path.exists(self.chain_file):
-                self.chain.load(self.chain_file)
-            self._load_whitelist()
 
         def on_nicknameinuse(self, c, e):
             self.nick = c.get_nickname() + "_"
@@ -27,9 +21,6 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
         def on_welcome(self, c, e):
             c.join(self.channel)
         
-        def _load_whitelist(self):
-            self._whitelist = yaml.load(open('whitelist.yaml', 'r'), Loader=yaml.CLoader)['list']
-
         def on_privmsg(self, c, e):
             self.ai.command(e.source.nick, e.arguments)
             '''try:
@@ -82,5 +73,5 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
 '''
 
 if __name__ == '__main__': 
-    bot = MarkovBot('#hexbottesting', 'Rorick', 'irc.snoonet.org')
+    bot = MarkovBot('#askmen', 'Rorick', 'irc.snoonet.org')
     bot.start()

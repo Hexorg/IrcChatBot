@@ -1,0 +1,146 @@
+<Hexorg>: one more disconnect
+<blackbird9999>: hey stopthetues
+<StopTheTues>: o/ Rorick
+<StopTheTues>: Hexorg: welcome back commander
+<blackbird9999>: my internet keeps going out for 30 seconds at a time and it's infuriating.
+<blackbird9999>: needed to vent that ha
+<StopTheTues>: fuck ISPs
+<blackbird9999>: I'm just worried it's a virus. I downloaded a budget software and my antivirus quarantined something when I opened it
+<blackbird9999>: Then that's about the time the connection issue started
+<blackbird9999>: malwarebytes picked up nothing running so idunno
+<blackbird9999>: still paranoid this will be my life now
+<StopTheTues>: you're good if malwarebytes didn't find anything
+<blackbird9999>: Thank you for your reassuring words stopthetues
+<blackbird9999>: I was thinking to myself...if I have a virus doing this...and antivirus can't find it. I wont be able to fix it unless I reinstall my OS FUCK!
+<StopTheTues>: if you clean with malwarebytes and a registry cleaner you should be fine, unless you went to some crazy website which is unlikely
+<blackbird9999>: I need to start opening up programs I download in Sandboxie
+<UnstableFlux>: just reformat
+<UnstableFlux>: easy peazy done
+<blackbird9999>: Sure that by itself is easy, getting my computer back to whre it was before is a huge pain
+<UnstableFlux>: It's 2019
+<UnstableFlux>: Do you not just have cloud and/or hard back-ups of everything?
+<UnstableFlux>: Or just a simple system restore point? :P
+<blackbird9999>: I have my plain files backed up on a separate hard drive locally. But I'd have to reconfigure all my settings reinstal my programs etc right?
+<UnstableFlux>: Depends on how you set back-ups
+<UnstableFlux>: system restore is better for something like this
+<UnstableFlux>: which is why you should set it to make on daily :P
+<blackbird9999>: lol not very well. I have created a simple batch file and the xcopy command that I scheduled with task scheduler
+<UnstableFlux>: But for me on my SSDs it takes about 45 minutes to reformat, download all my programs from my back-up, and make sure the settings are right
+<blackbird9999>: I've never actually used system restore
+<UnstableFlux>: So not too much time
+<blackbird9999>: it saves the programs you have installed and everything?
+<UnstableFlux>: I'm also paranoid and reformat 2-3 times a year so it's 2nd nature to me xD
+<UnstableFlux>: Yup!
+<UnstableFlux>: It's a system restore point
+<UnstableFlux>: All you're doing is telling windows to delete everything that happened/downloaded/etc from after the restore point
+<UnstableFlux>: If you choose to restore
+<blackbird9999>: ok i'll start a new restore point schedule for daily
+<UnstableFlux>: Not as good at getting rid of viruses and malware compared to a reformat but is still good
+<UnstableFlux>: https://www.lifewire.com/how-to-use-system-restore-in-windows-2626131
+<gonzobot>: Title: How To Use System Restore (Windows 10, 8, 7, Vista, XP)
+<blackbird9999>: Thanks a lot I will do this
+<UnstableFlux>: I've blocked so many of the shit trolls in r/boston I can never tell if my posts are getting shadowbanned users commenting or people I've blocked xD
+<UnstableFlux>: Like this one says 4 comments and I can only see 1
+<UnstableFlux>: https://www.reddit.com/r/boston/comments/bb7oq5/happy_opening_day_fenways_mr_fixit_keeps_the_old/
+<gonzobot>: (UnstableFlux) [Happy Opening Day] Fenway's Mr. Fix-It Keeps The Old Ballpark... : boston - 4 comments, 10 points - UnstableFlux 3h ago
+<blackbird9999>: i see 4
+<GingerGirl_>: I love  smelling how good my hair hair smells and it not smelling like smoke
+<GingerGirl_>: How's everyone's day
+<GingerGirl_>: Im ready to go home
+<UnstableFlux>: guess it's someone I blocked then lawls
+<blackbird9999>: I'm doing fine GingerGirl_ I have a day off, trying to be productive
+<blackbird9999>: you quite smoking?
+<UnstableFlux>: quit*
+<UnstableFlux>: ;)
+<GingerGirl_>: Maybe he meant you're*
+<UnstableFlux>: ooh true
+<UnstableFlux>: .flirt GingerGirl_
+<gonzobot>: GingerGirl_, You look so familiar... didn't we take a class together? I could've sworn we had chemistry.
+<GingerGirl_>: hahahah
+<UnstableFlux>: .starthunt
+<gonzobot>: Ducks have been spotted nearby. See how many you can shoot or save. use .bang to shoot or .befriend to save them. NOTE: Ducks now appear as a function of time and channel activity.
+<blackbird9999>: @unstableflux, sometimes reddit is buggy like that if you reload you'll probably see the comments
+<UnstableFlux>: na
+<UnstableFlux>: 100% people I blocked
+<GingerGirl_>: He's used reddit long enough, He knows how it works
+<Hexorg>: There are 4 posts, 3 commenters: Fail_Panda, riski_click, Mt_Snowtokia
+<UnstableFlux>: r/boston like most liberal city subs is just a trolling ground for the_douchers, far righters, and racists/white supremacists
+<GingerGirl_>: Sounds like my ex
+<UnstableFlux>: yup lol
+<UnstableFlux>: yeah I've been on reddit since 2006
+<UnstableFlux>: holy fuck
+<UnstableFlux>: I think 8 years on this account alone lolol
+<GingerGirl_>: lol
+<UnstableFlux>: Although I only use the unstableflux account for trolling now
+<GingerGirl_>: .flirt UnstableFlux 
+<gonzobot>: UnstableFlux, Are you from Tennessee? Cause you're the only TEN I see.
+<UnstableFlux>: TROLL THE TROLLS
+<UnstableFlux>: ;)
+<GingerGirl_>: .sexup UnstableFlux 
+<gonzobot>: UnstableFlux, I love my bed but I'd rather be in yours.
+<GingerGirl_>: :p
+<UnstableFlux>: :-*
+<UnstableFlux>: dang thought that was kissy face
+<GingerGirl_>: lol
+<GingerGirl_>: 😘
+<UnstableFlux>: See current troll: https://www.reddit.com/r/apexlegends/comments/bb7r87/calling_all_console_players_come_to_rapexconsole/ekhdt1h/?context=3
+<gonzobot>: (UnstableFlux) Calling all Console Players, come to r/ApexConsole : apexlegends - 151 comments, 813 points - JabbaTheLadd 3h ago
+<UnstableFlux>: https://www.reddit.com/r/apexlegends/comments/bb7r87/calling_all_console_players_come_to_rapexconsole/ekh2hkc/
+<gonzobot>: (UnstableFlux) Calling all Console Players, come to r/ApexConsole : apexlegends - 151 comments, 815 points - JabbaTheLadd 4h ago
+<UnstableFlux>: *
+<UnstableFlux>: wow so many triggered people from those two posts lolol
+<StopTheTues>: reeeeee
+<gonzobot>: ・゜゜・。。・ ​ ゜゜\_​o< FLAP F​LAP!
+<StopTheTues>: .bang
+<gonzobot>: StopTheTues you shot a duck in 55.147 seconds! You have killed 3 ducks in #askmen.
+<DadminFox>: .stophunt
+<gonzobot>: (DadminFox) the game has been stopped.
+<DadminFox>: bang
+<StopTheTues>: damn
+<blackbird9999>: .Just set up a savings account for the first time. saving 20 bucks a month. I'll be able to retire when I"m 385
+<blackbird9999>: SCORE
+<GingerGirl>: Better than never 
+<GingerGirl>: That game lasted longer than I thought it would
+<blackbird9999>: what game
+<DadminFox>: I wasnt at my desk to fix it
+<DadminFox>: https://www.reddit.com/r/metalgearsolid/comments/bb8tx3/when_the_tsa_finds_a_water_bottle_in_my_luggage/?st=jua316fp&sh=890794c0
+<gonzobot>: (DadminFox) When the TSA finds a water bottle in my luggage : metalgearsolid - 21 comments, 640 points - Venom-Znake 3h ago
+<DadminFox>: lmfao
+<StopTheTues>: yea... I got checked once back in the day over a fucking 4 oz lotion
+<GingerGirl_>: Did they take your jerk off lube?
+<blackbird9999>: Everybody knows they supply lotion in your hotel room GingerGirl_ ;)
+<StopTheTues>: I had to check it in :(
+<StopTheTues>: blackbird9999: yo that shit burns
+<blackbird9999>: lol
+<GingerGirl_>: Do guys frequently use lube to jerk off?
+<blackbird9999>: lotion. yea uncircumcised guys don't really need it though
+<blackbird9999>: hands are rough around the head where it's most sensitive and want to be rubbing mostly
+<StopTheTues>: i don't use lube unless i'm using my damn toy
+<StopTheTues>: most of the time it's lotion+hand
+<DadminFox>: where is FSK?
+<DadminFox>: that dude will listen to these convos all day
+<hexorg>: frequency shift keying?
+<DadminFox>: no, hes a user that used to come in from time to time
+<DadminFox>: ask people creepy questions
+<StopTheTues>: yea I think FSK was a semi regular
+<hexorg>: yeah I remember him
+<GingerGirl>: How are my questions not considered creepy?
+<GingerGirl>: Or are they and u guys are just nice to me
+<hexorg>: ur a girl
+<StopTheTues>: you have the woman pass /s
+<GingerGirl>: Am I?
+<UnstableFlux>: wut now?
+<GingerGirl>: Am I girl UnstableFlux 
+<hexorg>: you don't need to be a girl
+<hexorg>: you just need to be percieved as one
+<hexorg>: suddenly... sausage fest
+<hexorg>: .gis sausage fest
+<gonzobot>: (hexorg) http://media.phillyvoice.com/media/images/DSC02167a.width-800.jpg
+<UnstableFlux>: no
+<UnstableFlux>: ur a grill
+<UnstableFlux>: damn that looks hella tastey
+<UnstableFlux>: tasty*
+<StopTheTues>: George forman type?
+<Trezker>: I like big buns
+<hexorg>: she can't be a grill I can turn grills on quite fast
+<UnstableFlux>: ayoooooooooooooooooo
