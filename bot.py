@@ -22,7 +22,10 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             c.join(self.channel)
         
         def on_privmsg(self, c, e):
-            self.ai.command(e.source.nick, e.arguments)
+            if len(e.arguments) > 0:
+                ret = self.ai.command(e.source.nick, e.arguments[0])
+                if ret is not None:
+                    c.privmsg(e.source.nick, ret)
             '''try:
                 if len(e.arguments) > 0 and e.arguments[0] == 'Save':
                     self.chain.save(self.chain_file)
@@ -45,7 +48,8 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
                         
 
         def on_pubmsg(self, c, e):
-            self.ai.learn(e.source.nick, e.arguments)
+            if len(e.arguments) > 0:
+                self.ai.pubmsg(e.source.nick, e.arguments[0])
             '''
             try:  
                 tokens = None
@@ -73,5 +77,5 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
 '''
 
 if __name__ == '__main__': 
-    bot = MarkovBot('#askmen', 'Rorick', 'irc.snoonet.org')
+    bot = MarkovBot('#hexbottest', 'Hexbotter', 'irc.snoonet.org')
     bot.start()

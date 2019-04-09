@@ -2,7 +2,7 @@ class AI:
     def __init__(self):
         self.permissions = {'Hexorg': '*'}
         self.commands = {'test': self.cmd_test, 
-                        'force_learn': self.cmd_force_learn
+                        'fake_pubmsg': self.cmd_fake_pubmsg
                         }
 
     def command(self, nick, command):
@@ -25,10 +25,10 @@ class AI:
     def cmd_test(self, nick, args):
         return "test!"
 
-    def cmd_force_learn(self, nick, args):
-        self.learn(nick, ' '.join(args))
+    def cmd_fake_pubmsg(self, nick, args):
+        self.pubmsg(nick, ' '.join(args))
         return 'OK'
 
-    def learn(self, nick, text):
+    def pubmsg(self, nick, text):
         with open('chat_log.txt', 'a') as f:
             f.write('<{}>: {}\n'.format(nick, ''.join(text)))

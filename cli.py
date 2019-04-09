@@ -10,7 +10,7 @@ class CLI:
     def loop(self):
         while self.is_running:
             msg = input(">>> ")
-            print(self.ai.command('Hexorg', msg))
+            print('Response: '+self.ai.command('Hexorg', msg))
 
             
 
