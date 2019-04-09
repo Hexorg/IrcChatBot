@@ -2,7 +2,8 @@ class AI:
     def __init__(self):
         self.permissions = {'Hexorg': '*'}
         self.commands = {'test': self.cmd_test, 
-                        'flush': self.cmd_flush}
+                        'force_learn': self.cmd_force_learn
+                        }
 
     def command(self, nick, command):
         if len(command) > 0:
@@ -23,6 +24,10 @@ class AI:
 
     def cmd_test(self, nick, args):
         return "test!"
+
+    def cmd_force_learn(self, nick, args):
+        self.learn(nick, ' '.join(args))
+        return 'OK'
 
     def learn(self, nick, text):
         with open('chat_log.txt', 'a') as f:
