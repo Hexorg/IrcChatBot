@@ -1,3 +1,6 @@
+#from baseModel import BaseAIModel
+from Markov import OneGramMarkov
+
 class AI:
     def __init__(self, name):
         self.name = name
@@ -5,8 +8,10 @@ class AI:
         self.permissions = {'Hexorg': '*'}
         self.commands = {'ping': self.cmd_ping, 
                         'fake_pubmsg': self.cmd_fake_pubmsg,
-                        '{},'.format(self.name): self.cmd_public
+                        'model_stats': self.cmd_model_stats,
                         }
+        #self.model = BaseAIModel(self.chat_log_filename, self.name)
+        self.model = OneGramMarkov(self.chat_log_filename, self.name)
 
     def command(self, nick, command):
         if len(command) > 0:
@@ -30,13 +35,13 @@ class AI:
 
     def cmd_fake_pubmsg(self, nick, args):
         return self.pubmsg(nick, ' '.join(args))
-
-    def cmd_public(self, nick, args):
-        return 'I know nothing!'
+    
+    def cmd_model_stats(self, nick, args):
+        return self.model.stats(args)
 
     def pubmsg(self, nick, text):
-        if text.startswith('{}, '.format(self.name)):
-            return self.command(nick, text)
+        if self.name in text:
+            return self.model.trigger(nick, text)
         else:
             with open(self.chat_log_filename, 'a') as f:
                 f.write('<{}>: {}\n'.format(nick, ''.join(text)))

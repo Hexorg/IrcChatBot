@@ -10,7 +10,7 @@ class CLI:
     def loop(self):
         while self.is_running:
             msg = input(">>> ")
-            ret = self.ai.command('hexorg', msg)
+            ret = self.ai.command('Hexorg', msg)
             if ret is not None:
                 print('Response: '+ret)
             else:

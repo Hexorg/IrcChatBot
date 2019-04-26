@@ -49,7 +49,9 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
 
         def on_pubmsg(self, c, e):
             if len(e.arguments) > 0:
-                self.ai.pubmsg(e.source.nick, e.arguments[0])
+                ret = self.ai.pubmsg(e.source.nick, e.arguments[0])
+                if ret is not None:
+                    c.privmsg(self.channel, ret)
             '''
             try:  
                 tokens = None
