@@ -25,7 +25,11 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             if len(e.arguments) > 0:
                 ret = self.ai.command(e.source.nick, e.arguments[0])
                 if ret is not None:
-                    c.privmsg(e.source.nick, ret)
+                    if '\n' not in ret:
+                        c.privmsg(e.source.nick, ret)
+                    else:
+                        for line in ret.split('\n'):
+                            c.privmsg(e.source.nick, line)
             '''try:
                 if len(e.arguments) > 0 and e.arguments[0] == 'Save':
                     self.chain.save(self.chain_file)
@@ -51,7 +55,11 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             if len(e.arguments) > 0:
                 ret = self.ai.pubmsg(e.source.nick, e.arguments[0])
                 if ret is not None:
-                    c.privmsg(self.channel, ret)
+                    if '\n' not in ret:
+                        c.privmsg(self.channel, ret)
+                    else:
+                        for line in ret.split('\n'):
+                            c.privmsg(self.channel, line)
             '''
             try:  
                 tokens = None
