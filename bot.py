@@ -22,7 +22,8 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
             c.join(self.channel)
         
         def on_privmsg(self, c, e):
-            self.ai.command(e.source.nick, e.arguments)
+            if len(e.arguments) > 0:
+                self.ai.command(e.source.nick, e.arguments[0])
             '''try:
                 if len(e.arguments) > 0 and e.arguments[0] == 'Save':
                     self.chain.save(self.chain_file)
@@ -45,7 +46,8 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
                         
 
         def on_pubmsg(self, c, e):
-            self.ai.learn(e.source.nick, e.arguments)
+            if len(e.arguments) > 0:
+                self.ai.learn(e.source.nick, e.arguments[0])
             '''
             try:  
                 tokens = None
