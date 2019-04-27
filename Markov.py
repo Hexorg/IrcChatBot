@@ -3,6 +3,12 @@
 import random
 from collections import deque
 from baseModel import BaseAIModel
+
+# Word2Vec:: model = gensim.models.Word2Vec.load_word2vec_format('./model/GoogleNews-vectors-negative300.bin', binary=True) 
+# model.similar_by_vector(model['cats'] - model['cat'])
+
+
+
 class OneGramMarkov(BaseAIModel):
     __description__ = 'Markov chain of space separated tokens'
 
