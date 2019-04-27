@@ -9386,3 +9386,8 @@
 <gonzobot>: HURRAY!
 <Hexorg>: \o/ indeed
 <gonzobot>: HOOYAH!
+<Hexorg>: test
+<Hexorg>: Hexorg high
+<Hexorg>: Hello, World!
+<Hexorg>: test
+<Hexorg>: .OneGramMarkov Hexorg I

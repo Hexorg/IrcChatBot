@@ -4,9 +4,10 @@ import random
 from collections import deque
 from baseModel import BaseAIModel
 class OneGramMarkov(BaseAIModel):
+    __description__ = 'Markov chain of space separated tokens'
 
-    def __init__(self, chat_log_filename, myname):
-        super().__init__(chat_log_filename, myname)
+    def __init__(self, corpus_filename, myname):
+        super().__init__(corpus_filename, myname)
         self._chain = {}
         self.learn()
 
@@ -34,10 +35,12 @@ class OneGramMarkov(BaseAIModel):
             if user in self._chain:
                 sentance = [w for w in self.follow_chain(user, start)]
                 if len(sentance) > 1:
-                    return ' '.join(sentance)
+                    return '<{}> {}'.format(user, ' '.join(sentance))
                 elif len(sentance) == 1:
                     return '{} never said {}'.format(user, sentance[0])
-        return 'Usage: .{} NICK START_WORD'.format(self.name)
+            else:
+                return 'I never saw {} speak'.format(user)
+        return None
 
 
     def stats(self, args):
@@ -66,6 +69,9 @@ class OneGramMarkov(BaseAIModel):
                 return '{} knows {} words:\n{}'.format(args[0], len(self._chain[args[0]]), ', '.join(self._chain[args[0]]))
             else:
                 return 'User {} not in corpus'.format(args[0])
+
+    def trigger_conditions(self):
+        return '.{} NICK START_WORD'.format(self.__class__.__name__)
 
      
 

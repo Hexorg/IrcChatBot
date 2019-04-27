@@ -20,71 +20,38 @@ class MarkovBot(irc.bot.SingleServerIRCBot):
 
         def on_welcome(self, c, e):
             c.join(self.channel)
+
+        def sanitize_output(self, ret):
+            if ret is not None:
+                output_lines = []
+                lines = ret.split('\n')
+                for line in lines:
+                    if len(line) > 500:
+                        index = line.rfind(' ')
+                        if index == -1:
+                            output_lines.append(line[:500])
+                            output_lines.append(line(500:]))
+                        else:
+                            output_lines.append(line[:index])
+                            output_lines.append(line[index+1:])
+                    else:
+                        output_lines.append(line)
+                return output_lines
         
         def on_privmsg(self, c, e):
             if len(e.arguments) > 0:
-                ret = self.ai.command(e.source.nick, e.arguments[0])
+                ret = self.sanitize_output(self.ai.command(e.source.nick, e.arguments[0]))
                 if ret is not None:
-                    if '\n' not in ret:
-                        c.privmsg(e.source.nick, ret)
-                    else:
-                        for line in ret.split('\n'):
-                            c.privmsg(e.source.nick, line)
-            '''try:
-                if len(e.arguments) > 0 and e.arguments[0] == 'Save':
-                    self.chain.save(self.chain_file)
-                elif len(e.arguments) > 0 and e.arguments[0] == 'Load':
-                    self._load_whitelist()
-                else:
-                    owner, start = self.is_command(e.arguments[0])
-                    if owner is not None:
-                        says = []
-                        for w in self.chain.follow_chain(owner, start):
-                            says.append(w)
-                        c.privmsg(e.source.nick, ' '.join(says))
-                        print(e.source.nick)
-                        print(' '.join(says))
-                    else:
-                        print("Owner is None")
-            except Exception as e:
-                print(e)
-            '''
+                    for line in ret:
+                        c.privmsg(e.source.nick, line)
                         
 
         def on_pubmsg(self, c, e):
             if len(e.arguments) > 0:
-                ret = self.ai.pubmsg(e.source.nick, e.arguments[0])
+                ret = self.sanitize_output(elf.ai.pubmsg(e.source.nick, e.arguments[0]))
                 if ret is not None:
-                    if '\n' not in ret:
-                        c.privmsg(self.channel, ret)
-                    else:
-                        for line in ret.split('\n'):
-                            c.privmsg(self.channel, line)
-            '''
-            try:  
-                tokens = None
-                if len(e.arguments) > 0:
-                    owner, start = self.is_command(e.arguments[0])
-                    if owner is None:
-                        tokens = self._tokenize(e.arguments[0])
-                        if tokens is not None:
-                            for i, word in enumerate(tokens):
-                                if i+1 < len(tokens):
-                                    self.chain.extend(e.source.nick, word, tokens[i+1])
-                                else:
-                                    c = word[-1:]
-                                    if c != '.' or c != '?' or c != '!':
-                                        self.chain.extend(e.source.nick, word, '.')
-                    else:
-                        if e.source.nick in self._whitelist:
-                            says = []
-                            for w in self.chain.follow_chain(owner, start):
-                                says.append(w)
-                            c.privmsg(self.channel, "They would probably say:")
-                            c.privmsg(self.channel, ' '.join(says))
-            except:
-                self.chain.save(self.chain_file)
-'''
+                    for line in ret:
+                        c.privmsg(self.channel, line)
 
 if __name__ == '__main__': 
     bot = MarkovBot('#hexbottest', 'Hexbotter', 'irc.snoonet.org')

@@ -12,7 +12,7 @@ class CLI:
             msg = input(">>> ")
             ret = self.ai.command('Hexorg', msg)
             if ret is not None:
-                print('Response: '+ret)
+                print('<{}>: '.format(self.ai.name) +ret)
             else:
                 print('No response')
 
