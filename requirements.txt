@@ -1,0 +1,16 @@
+importlib-metadata==0.9
+inflect==2.1.0
+irc==17.1
+jaraco.classes==2.0
+jaraco.collections==2.0
+jaraco.functools==2.0
+jaraco.itertools==4.4.2
+jaraco.logging==2.0
+jaraco.stream==2.0
+jaraco.text==3.0
+more-itertools==7.0.0
+pytz==2018.9
+PyYAML==5.1
+six==1.12.0
+tempora==1.14
+zipp==0.3.3
