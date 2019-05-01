@@ -94,6 +94,12 @@ class AIUseCommand(AIBaseCommand):
         if len(args) == 1:
             if args[0] in self.ai.models:
                 self.ai.model = self.ai.models[args[0]](self.ai.chat_log_filename, self.ai.name)
+                with open(self.ai.chat_log_filename, 'r') as f:
+                    for line in f:
+                        data = line.split(':')
+                        nick = data[0][1:-1]
+                        text = (':'.join(data[1:]))[:-1]
+                        self.ai.model.learn_line(nick, text)
                 return 'Model {} loaded'.format(args[0])
             else:
                 return 'Can\'t find model {}'.format(args[0])
@@ -145,4 +151,5 @@ class AI:
         else:
             with open(self.chat_log_filename, 'a') as f:
                 f.write('<{}>: {}\n'.format(nick, ''.join(text)))
+            self.model.learn_line(nick, ''.join(text))
             return None

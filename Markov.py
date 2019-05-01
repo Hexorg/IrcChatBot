@@ -7,7 +7,34 @@ from baseModel import BaseAIModel
 # Word2Vec:: model = gensim.models.Word2Vec.load_word2vec_format('./model/GoogleNews-vectors-negative300.bin', binary=True) 
 # model.similar_by_vector(model['cats'] - model['cat'])
 
+class MarkovNode:
+    def __init__(self, token, is_start=False, is_end=False): 
+        self.prev = []
+        self.next = {}
+        self.is_start = is_start
+        self.is_end = is_end
+        self.token = token
+        self.key = MarkovNode.token_to_key(token)
+        self._max_next = 0
 
+    def add_next(self, node):
+        if node.key in self.next:
+            self.next[node.key][0] += 1
+        else:
+            self.next[node.key] = [1, node]
+        self._max_next += 1
+
+    def next_random(self):
+        r = random.uniform(0, self._max_next)
+        for key in self.next:
+            r -= self.next[key][0]
+            if r <= 0:
+                return self.next[key][1]
+        return self.next[key][1]
+
+    @staticmethod
+    def token_to_key(token):
+        return token.lower()
 
 class OneGramMarkov(BaseAIModel):
     __description__ = 'Markov chain of space separated tokens'
@@ -15,104 +42,65 @@ class OneGramMarkov(BaseAIModel):
     def __init__(self, corpus_filename, myname):
         super().__init__(corpus_filename, myname)
         self._chain = {}
-        self.learn()
 
-    def learn(self):
-        with open(self.corpus_filename, 'r') as f:
-            for line in f:
-                data = line.split(':')
-                owner = data[0][1:-1]
-                text = ':'.join(data[1:])
-                if owner not in self.blacklist:
-                    if not text.startswith('.'):
-                        tokens = text.split(' ')
-                        lastToken = None
-                        for i in range(len(tokens)):
-                            if len(tokens[i]) > 0:
-                                if lastToken is None:
-                                    lastToken = tokens[i]
-                                elif lastToken != tokens[i]:
-                                    self.extend(owner, lastToken, tokens[i])
-                                lastToken = tokens[i]
+    def learn_line(self, nick, line):
+        if nick not in self.blacklist and not line.startswith('.'):
+            userid = nick 
+            if userid not in self._chain:
+                self._chain[userid] = {}
+
+            tokens = line.split(' ')
+            isNewSentance = True
+            lastNode = None
+            for i in range(len(tokens)):
+                if len(tokens[i]) > 0:
+                    c = tokens[i][-1]
+                    isEndOfSentance = False
+                    if c == '.' or c == '!' or c == '?' or i == len(tokens)-1:
+                        isEndOfSentance = True
+                    node = MarkovNode(tokens[i], is_start=isNewSentance, is_end=isEndOfSentance)
+                    if node.key in self._chain[userid]:
+                        node = self._chain[userid][node.key]
+                        if isNewSentance:
+                            node.is_start = True
+                        if isEndOfSentance:
+                            node.is_end = True
+                    else:
+                        self._chain[userid][node.key] = node
+
+                    if lastNode is not None:
+                        lastNode.add_next(node)
+                        node.prev.append(lastNode)
+
+                    lastNode = node
+                
+    def trigger_conditions(self):
+        return '{}, what would <nick> say about <topic>'.format(self.name)
 
     def trigger(self, owner, text):
-        if text.startswith('.{}'.format(self.name)) and ' ' in text:
-            user, start = text.split(' ')[1:3]
-            if user in self._chain:
-                sentance = [w for w in self.follow_chain(user, start)]
-                if len(sentance) > 1:
-                    return '<{}> {}'.format(user, ' '.join(sentance))
-                elif len(sentance) == 1:
-                    return '{} never said {}'.format(user, sentance[0])
-            else:
-                return 'I never saw {} speak'.format(user)
-        return None
+        start_trigger = '{}, what would '.format(self.name)
+        if text.startswith(start_trigger):
+            text = text[len(start_trigger):]
+            if ' ' in text:
+                tokens = text.split(' ')
+                if len(tokens) > 3:
+                    if tokens[1] == 'say' and tokens[2] == 'about':
+                        user = tokens[0]
+                        if user not in self._chain:
+                            return 'Username {} not recognized'.format(user)
+                        entry_key = MarkovNode.token_to_key(tokens[3])
+                        if not entry_key in self._chain[user]:
+                            return '{} never mentioned {}'.format(user, tokens[3])
+                        entry_node = self._chain[user][entry_key]
+                        output = '<{}> {}'.format(user, self.find_start(entry_node))
+                        node = entry_node.next_random()
+                        while node is not None and not node.is_end or len(output) > 450:
+                            node = node.next_random()
+                            if node is None:
+                                print("ERROR, Next random is none")
+                            output += ' ' + node.token
+                        return output
 
 
-    def stats(self, args):
-        if len(args) == 0:
-            top_users = []
-            top_dicts = []
-            for user in self._chain:
-                if len(top_users) < 5:
-                    top_users.append(user)
-                    top_dicts.append(len(self._chain[user]))
-                else:
-                    cdictlen = len(self._chain[user])
-                    lowest_talker_id = 0
-                    lowest_talker_num = 999999
-                    for i in range(len(top_users)):
-                        if top_dicts[i] < lowest_talker_num:    
-                            lowest_talker_id = i
-                            lowest_talker_num = top_dicts[i]
-                    if cdictlen > lowest_talker_num:
-                        top_users[lowest_talker_id] = user
-                        top_dicts[lowest_talker_id] = cdictlen
-                        
-            return 'Users: {}\nTop talkers: {}'.format(len(self._chain), ', '.join(['{} ({})'.format(top_users[i], top_dicts[i]) for i in range(len(top_users))]))
-        else:
-            if args[0] in self._chain:
-                return '{} knows {} words:\n{}'.format(args[0], len(self._chain[args[0]]), ', '.join(self._chain[args[0]]))
-            else:
-                return 'User {} not in corpus'.format(args[0])
-
-    def trigger_conditions(self):
-        return '.{} NICK START_WORD'.format(self.__class__.__name__)
-
-     
-
-    def _random_choice(self, data):
-        total = 0
-        for key in data:
-            total += data[key]
-        r = random.uniform(0, total)
-        for key in data:
-            r -= data[key]
-            if r <= 0:
-                return key
-
-    def extend(self, owner, item1, item2):
-        if owner not in self._chain.keys():
-            self._chain[owner] = {}
-
-        if item1 in self._chain[owner].keys():
-            if item2 in self._chain[owner][item1]:
-                self._chain[owner][item1][item2] += 1
-            else:
-                self._chain[owner][item1][item2] = 1
-        else:
-            self._chain[owner][item1] = {item2: 1}
-
-    def follow_chain(self, owner, start):
-        p = start
-        keys = self._chain[owner].keys()
-        count = 0
-        while p in keys:
-            count += 1
-            yield p
-            c = p[-1:]
-            if c == '.' or c == '?' or c == '!' or count > 30:
-                break
-            p = self._random_choice(self._chain[owner][p])
-        yield p
-
+    def find_start(self, node):
+        return node.token
