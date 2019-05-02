@@ -9,8 +9,11 @@ class CLI:
 
     def loop(self):
         while self.is_running:
-            msg = input(">>> ")
-            ret = self.ai.command('Hexorg', msg)
+            try:
+                msg = input(">>> ")
+            except EOFError:
+                return
+            ret = self.ai.command('Heg', msg)
             if ret is not None:
                 print('<{}>: '.format(self.ai.name) +ret)
             else:

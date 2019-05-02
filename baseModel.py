@@ -1,10 +1,12 @@
 class BaseAIModel:
     __description__ = 'Base Model. Always triggers and says "triggered"'
 
-    def __init__(self, corpus_filename, myname):
+    def __init__(self, myname):
         self.name = myname
-        self.corpus_filename = corpus_filename
         self.blacklist = ['gonzobot']
+
+    def learn_line(self, nick, line):
+        raise Exception("Not Implemented")
 
     def trigger(self, username, input_string):
         return 'model triggered'

@@ -26,21 +26,38 @@ class MarkovNode:
 
     def next_random(self):
         r = random.uniform(0, self._max_next)
+        key = None
         for key in self.next:
             r -= self.next[key][0]
             if r <= 0:
                 return self.next[key][1]
-        return self.next[key][1]
+        if key is not None:
+            return self.next[key][1]
+
+    def __str__(self):
+        return self.token
+
+    def __repr__(self):
+        flags = []
+        if self.is_start:
+            flags.append('start')
+        if self.is_end:
+            flags.append('end')
+        return '{} ({}): {}'.format(self.token, ','.join(flags), ','.join([str(self.next[key][1]) for key in self.next]))
 
     @staticmethod
     def token_to_key(token):
-        return token.lower()
+        t = token.lower()
+        if not t[-1].isalpha():
+            return t[:-1]
+        else:
+            return t
 
 class OneGramMarkov(BaseAIModel):
     __description__ = 'Markov chain of space separated tokens'
 
-    def __init__(self, corpus_filename, myname):
-        super().__init__(corpus_filename, myname)
+    def __init__(self, myname):
+        super().__init__(myname)
         self._chain = {}
 
     def learn_line(self, nick, line):
@@ -50,6 +67,8 @@ class OneGramMarkov(BaseAIModel):
                 self._chain[userid] = {}
 
             tokens = line.split(' ')
+            if len(tokens) <= 2:
+                return
             isNewSentance = True
             lastNode = None
             for i in range(len(tokens)):
@@ -91,14 +110,17 @@ class OneGramMarkov(BaseAIModel):
                         entry_key = MarkovNode.token_to_key(tokens[3])
                         if not entry_key in self._chain[user]:
                             return '{} never mentioned {}'.format(user, tokens[3])
-                        entry_node = self._chain[user][entry_key]
-                        output = '<{}> {}'.format(user, self.find_start(entry_node))
-                        node = entry_node.next_random()
-                        while node is not None and not node.is_end or len(output) > 450:
+                        node = self._chain[user][entry_key]
+                        output = '<{}> {}'.format(user, self.find_start(node))
+                        while node is not None and len(output) < 450:
                             node = node.next_random()
-                            if node is None:
-                                print("ERROR, Next random is none")
-                            output += ' ' + node.token
+                            if node is not None:
+                                output += ' ' + node.token
+                            else:
+                                break
+                            if node.is_end and len(output) > 30:
+                                break
+                                
                         return output
 
 

@@ -2,3 +2,4 @@ __pycache__
 venv
 *.swp
 GoogleNews-vectors-negative300.bin
+chat_log.txt
