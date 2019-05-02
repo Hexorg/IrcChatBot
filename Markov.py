@@ -105,6 +105,8 @@ class OneGramMarkov(BaseAIModel):
                 if len(tokens) > 3:
                     if tokens[1] == 'say' and tokens[2] == 'about':
                         user = tokens[0]
+                        if user == 'I' or user == 'i':
+                            user = owner
                         if user not in self._chain:
                             return 'Username {} not recognized'.format(user)
                         entry_key = MarkovNode.token_to_key(tokens[3])
