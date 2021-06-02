@@ -28,5 +28,5 @@ scipy==1.2.1
 six==1.12.0
 smart-open==1.8.3
 tempora==1.14
-urllib3==1.24.2
+urllib3==1.26.5
 zipp==0.3.3
